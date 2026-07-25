@@ -1,0 +1,28 @@
+{
+  "name": "news-portal",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "dist/program.js",
+  "scripts": {
+    "dev": "tsx watch program.ts",
+    "check": "tsc --noEmit",
+    "check:diag": "tsc --noEmit --extendedDiagnostics",
+    "build": "tsc",
+    "start": "node dist/program.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^12.10.0",
+    "express": "^5.2.1",
+    "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.9.1",
+    "tsx": "^4.19.4"
+  }
+}
