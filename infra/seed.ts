@@ -53,4 +53,72 @@ insert.run(
   1,
 );
 
-console.log("✅ Notícias do MasterChef inseridas com sucesso!");
+// Videos
+const insertVideo = db.prepare(`
+  INSERT INTO videos (titulo, texto, imagem, duracao, url, link, dataPublicacao, tags, ativo)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+`);
+
+insertVideo.run(
+  "Anna Paula vence final do MasterChef 2020 e dedica prêmio à filha",
+  "Cozinheira preparou um prato bem brasileiro e se emocionou ao levar grande prêmio da temporada",
+  "https://thumb.mais.uol.com.br/16886600-xlarge.jpg?ver=1",
+  "00:04:36",
+  "https://player.mais.uol.com.br/?mediaId=16886600",
+  "https://entretenimento.band.uol.com.br/videos/16886600/anna-paula-vence-final-do-masterchef-2020-e-dedica-premio-a-filha",
+  "2020-12-30T03:12:00.000",
+  "masterchef, masterchef 2020",
+  1
+);
+
+insertVideo.run(
+  "Muito boa essa mousse de caramelo, diz Jacquin para Marina",
+  "Estudante fez uma tartelette de maçã com mousse de caramelo salgado com alguns erros técnicos, mas causou uma boa impressão",
+  "https://thumb.mais.uol.com.br/16886599-xlarge.jpg?ver=1",
+  "00:01:27",
+  "https://player.mais.uol.com.br/?mediaId=16886599",
+  "https://entretenimento.band.uol.com.br/videos/16886599/muito-boa-essa-mousse-de-caramelo-diz-jacquin-para-marina",
+  "2020-12-30T03:12:00.000",
+  "masterchef, masterchef 2020",
+  1
+);
+
+// Galeria
+const insertGaleria = db.prepare(`
+  INSERT INTO galerias (titulo, texto, imagem, link, dataPublicacao, tags, ativo, fotos)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+`);
+
+const fotos = JSON.stringify([
+  {
+    thumb: "https://pubimg.band.uol.com.br/files/eb9e64b485e94efc15aa.jpg",
+    thumbNail: "https://pubimg.band.uol.com.br/files/eb9e64b485e94efc15aa.jpg",
+    credito: "Carlos Reinis/Band",
+    legenda: "No especial de Natal, mais famosos entraram na cozinha do MasterChef"
+  },
+  {
+    thumb: "https://pubimg.band.uol.com.br/files/c41a8db03aa1f66c935e.jpg",
+    thumbNail: "https://pubimg.band.uol.com.br/files/c41a8db03aa1f66c935e.jpg",
+    credito: "Carlos Reinis/Band",
+    legenda: "Foi a vez de César Menotti e Maraísa mostrarem seus dotes culinários"
+  },
+  {
+    thumb: "https://pubimg.band.uol.com.br/files/fad9cc5b705a03195087.jpg",
+    thumbNail: "https://pubimg.band.uol.com.br/files/fad9cc5b705a03195087.jpg",
+    credito: "Carlos Reinis/Band",
+    legenda: "Eles tiveram de enfrentar Péricles e Marília Mendonça no desafio"
+  }
+]);
+
+insertGaleria.run(
+  "Marília Mendonça, Péricles, César Menotti e Maraísa em especial de Natal",
+  "Especial de natal com celebridades no MasterChef 2020",
+  "https://pubimg.band.uol.com.br/files/eb9e64b485e94efc15aa.jpg",
+  "https://entretenimento.band.uol.com.br/masterchef/noticias/16318389/marilia-mendonca-pericles-maraisa-e-cesar-menotti-participam-de-especial-de-natal-do-masterchef",
+  "2020-08-12T10:26:00.000",
+  "masterchef, masterchef 2020",
+  1,
+  fotos
+);
+
+console.log("✅ Seeds inseridos com sucesso!");

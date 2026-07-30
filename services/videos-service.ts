@@ -1,11 +1,11 @@
-import type { IVideosServices } from "../contracts/ivideos-service.js";
+import type { IVideoService } from "../contracts/ivideos-service.js";
 import Result from "../infra/result.js";
 import type { Video } from "../models/video.js";
-import { VideosRepository } from "../repository/videos-repository.js";
+import { videoRepository } from "../repository/videos-repository.js";
 
-export class VideoService implements IVideosServices {
+export class VideoService implements IVideoService {
   async get(_id: string): Promise<Video> {
-    let result = VideosRepository.findById(_id);
+    let result = videoRepository.findById(_id);
     if (!result) throw new Error(`Video ${_id} não encontrado`);
     return result;
   }
@@ -13,8 +13,8 @@ export class VideoService implements IVideosServices {
     const result = new Result<Video>();
     result.Page = page;
     result.Qtd = qtd;
-    result.Total = VideosRepository.countAll();
-    result.Data = VideosRepository.findAll(page, qtd);
+    result.Total = videoRepository.countAll();
+    result.Data = videoRepository.findAll(page, qtd);
     return result;
   }
 }
