@@ -2,13 +2,13 @@
 
 ## Descrição
 
-Aplicação backend em TypeScript com Express para busca e consulta de notícias, vídeos e galerias.
+Aplicação backend em TypeScript com Express para busca e consulta de notícias, podcasts, vídeos e galerias.
 
 ## Funcionalidades
 
 - Retorna a versão da API no endpoint raiz
 - Lista notícias paginadas
-- Retorna notícia por ID
+- Retorna notícia por ID.698
 - Lista vídeos paginados
 - Retorna vídeo por ID
 - Lista galerias paginadas
