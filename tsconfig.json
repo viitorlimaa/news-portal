@@ -4,6 +4,8 @@
     "module": "nodenext",
     "target": "esnext",
     "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
 
     // Saída
     "outDir": "dist",

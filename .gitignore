@@ -1,2 +1,33 @@
+# Runtime data
+*.seed
+
+# Compiled binary addons (https://nodejs.org/api/addons.html)
+build/Release
+
+# Dependency directories
 node_modules/
+
+# TypeScript cache
+*.tsbuildinfo
+
+#Build 
 dist
+
+# Logs
+*.log
+
+# Optional npm cache directory
+.npm
+
+# dotenv environment variable files
+.env
+.env.*
+!.env.example
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+>>>>>>> develop
