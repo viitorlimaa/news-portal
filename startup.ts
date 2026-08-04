@@ -17,7 +17,7 @@ class StartUp {
   }
   routes() {
     this.app.route("/").get((req, res) => {
-      res.send({ versao: "0.0.1" });
+      res.send({ versao: "0.0.4" });
     });
 
     // Buscar notícias páginadas
