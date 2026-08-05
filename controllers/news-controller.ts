@@ -1,12 +1,10 @@
 import type { Request, Response } from "express";
-import { NewsService } from "../services/news-service.js";
+import { inject, injectable } from "tsyringe";
+import type { INewsService } from "../contracts/inews-service.js";
 
+@injectable()
 export default class NewsController {
-  private _service: NewsService;
-
-  constructor() {
-    this._service = new NewsService();
-  }
+  constructor(@inject("INewsService") private _service: INewsService) {}
 
   async get(request: Request, response: Response) {
     try {

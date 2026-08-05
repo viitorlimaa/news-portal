@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import startup from "./startup.js";
 
 const port = "5000";

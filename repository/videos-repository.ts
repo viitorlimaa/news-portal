@@ -1,10 +1,10 @@
 import database from "../infra/db.js";
-import type { Videos } from "../models/video.js";
+import type { Video } from "../models/video.js";
 
 
-export const VideosRepository = {
-  findById(id: string): Videos | undefined {
-    return database.prepare("SELECT * FROM videos WHERE id = ?").get(id) as Videos;
+export const videoRepository = {
+  findById(id: string): Video | undefined {
+    return database.prepare("SELECT * FROM videos WHERE id = ?").get(id) as Video;
   },
 
   countAll(): number {
@@ -14,10 +14,10 @@ export const VideosRepository = {
     return result.total;
   },
 
-  findAll(page: number, qtd: number): Videos[] {
+  findAll(page: number, qtd: number): Video[] {
     const offset = page * qtd - qtd;
     return database
       .prepare("SELECT * FROM videos LIMIT ? OFFSET ?")
-      .all(qtd, offset) as Videos[];
+      .all(qtd, offset) as Video[];
   },
 };
