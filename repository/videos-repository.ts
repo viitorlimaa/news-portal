@@ -1,10 +1,11 @@
 import database from "../infra/db.js";
 import type { Video } from "../models/video.js";
 
-
 export const videoRepository = {
   findById(id: string): Video | undefined {
-    return database.prepare("SELECT * FROM videos WHERE id = ?").get(id) as Video;
+    return database
+      .prepare("SELECT * FROM videos WHERE id = ?")
+      .get(id) as Video;
   },
 
   countAll(): number {

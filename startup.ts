@@ -20,6 +20,7 @@ class StartUp {
 
     console.log("✅ Banco conectado:", database ? "OK" : "ERRO");
   }
+
   routes() {
     this.app.route("/").get((req, res) => {
       res.send({ versao: "0.0.6" });
