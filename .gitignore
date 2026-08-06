@@ -8,7 +8,7 @@ build/Release
 node_modules/
 
 # TypeScript cache
-*.tsbuildinfo
+tsconfig.tsbuildinfo
 
 #Build 
 dist
