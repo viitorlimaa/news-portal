@@ -121,4 +121,21 @@ insertGaleria.run(
   fotos
 );
 
+const insertPodcast = db.prepare(`
+  INSERT INTO podcasts (titulo, texto, imagem, url, duracao, dataPublicacao, tags, link, ativo)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+`);
+
+insertPodcast.run(
+  "Podcast MasterChef: bastidores da cozinha",
+  "Episódio especial com histórias por trás da nova temporada.",
+  "podcast-masterchef.jpg",
+  "https://www.band.com.br/podcast/masterchef.mp3",
+  "24:15",
+  "2026-06-03T00:00:00.000Z",
+  "masterchef,podcast,bastidores",
+  "https://www.band.com.br/masterchef/podcast",
+  1,
+);
+
 console.log("✅ Seeds inseridos com sucesso!");

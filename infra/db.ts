@@ -50,4 +50,20 @@ db.exec(`
     ativo INTEGER DEFAULT 1
   )
 `);
+
+db.exec(`
+  CREATE TABLE IF NOT EXISTS podcasts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    titulo TEXT,
+    texto TEXT,
+    imagem TEXT,
+    url TEXT,
+    duracao TEXT,
+    dataPublicacao TEXT,
+    tags TEXT,
+    link TEXT,
+    ativo INTEGER DEFAULT 1
+  )
+`);
+
 export default db;

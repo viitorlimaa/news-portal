@@ -5,6 +5,7 @@ import database from "./infra/db.js";
 import NewsController from "./controllers/news-controller.js";
 import VideosController from "./controllers/videos-controller.js";
 import GalleryController from "./controllers/gallery-controller.js";
+import PodcastController from "./controllers/podcast-controller.js";
 import { container } from "./shared/container.js";
 
 class StartUp {
@@ -12,6 +13,7 @@ class StartUp {
   private news = container.resolve(NewsController);
   private video = container.resolve(VideosController);
   private galeria = container.resolve(GalleryController);
+  private podcast = container.resolve(PodcastController);
 
   constructor() {
     this.app = express(); //cria o express
@@ -54,6 +56,16 @@ class StartUp {
       });
     this.app.route("/api/v1/gallery/:id").get((req: Request, res: Response) => {
       return this.galeria.getById(req, res);
+    });
+
+    //podcast
+    this.app
+      .route("/api/v1/podcast/:page/:qtd")
+      .get((req: Request, res: Response) => {
+        return this.podcast.get(req, res);
+      });
+    this.app.route("/api/v1/podcast/:id").get((req: Request, res: Response) => {
+      return this.podcast.getById(req, res);
     });
   }
 }
