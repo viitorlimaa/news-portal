@@ -1,0 +1,28 @@
+name: PR Check # nome do workflow
+
+on: # quando vai executar
+  pull_request:
+    branches: [develop, main] # em PRs para essas branches
+
+jobs: # o que vai fazer
+  check-database: # nome do job
+    runs-on: ubuntu-latest # ambiente onde vai rodar
+
+    steps: # passos do job
+      - name: Checkout do código
+        uses: actions/checkout@v3 # baixa o código do PR
+
+      - name: Verifica arquivos de banco
+        run: |
+          if find . -name "*.db" -not -path "./node_modules/*" | grep -q .; then
+            echo "❌ Arquivo de banco de dados encontrado!"
+            exit 1
+          else
+            echo "Nenhum arquivo de banco encontrado"
+          fi
+
+      - name: Instala dependências
+        run: npm install
+
+      - name: Verifica erros de TypeScript
+        run: npm run check
