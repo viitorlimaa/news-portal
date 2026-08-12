@@ -10,7 +10,7 @@ node_modules/
 # TypeScript cache
 tsconfig.tsbuildinfo
 
-#Build 
+#Build
 dist
 
 # Logs
@@ -27,7 +27,5 @@ dist
 # VS Code
 .vscode/
 
-# OS
-.DS_Store
-Thumbs.db
+# Database
 database.db
