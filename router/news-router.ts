@@ -12,9 +12,19 @@ newsRouter
     return news.get(req, res);
   });
 
+newsRouter.post("/api/v1/news", (req: Request, res: Response) => {
+  const news = container.resolve(NewsController);
+  return news.create(req, res);
+});
+
 newsRouter.route("/api/v1/news/:id").get((req: Request, res: Response) => {
   const news = container.resolve(NewsController);
   return news.getById(req, res);
+});
+
+newsRouter.delete("/api/v1/news/:id", (req: Request, res: Response) => {
+  const news = container.resolve(NewsController);
+  return news.delete(req, res);
 });
 
 export default newsRouter;

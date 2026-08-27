@@ -54,12 +54,12 @@ insert.run(
 );
 
 // Videos
-const insertVideo = db.prepare(`
+const insertVideos = db.prepare(`
   INSERT INTO videos (titulo, texto, imagem, duracao, url, link, dataPublicacao, tags, ativo)
   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
 `);
 
-insertVideo.run(
+insertVideos.run(
   "Anna Paula vence final do MasterChef 2020 e dedica prêmio à filha",
   "Cozinheira preparou um prato bem brasileiro e se emocionou ao levar grande prêmio da temporada",
   "https://thumb.mais.uol.com.br/16886600-xlarge.jpg?ver=1",
@@ -71,7 +71,7 @@ insertVideo.run(
   1
 );
 
-insertVideo.run(
+insertVideos.run(
   "Muito boa essa mousse de caramelo, diz Jacquin para Marina",
   "Estudante fez uma tartelette de maçã com mousse de caramelo salgado com alguns erros técnicos, mas causou uma boa impressão",
   "https://thumb.mais.uol.com.br/16886599-xlarge.jpg?ver=1",
@@ -84,7 +84,7 @@ insertVideo.run(
 );
 
 // Galeria
-const insertGaleria = db.prepare(`
+const insertGalleries = db.prepare(`
   INSERT INTO galerias (titulo, texto, imagem, link, dataPublicacao, tags, ativo, fotos)
   VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 `);
@@ -110,7 +110,7 @@ const fotos = JSON.stringify([
   }
 ]);
 
-insertGaleria.run(
+insertGalleries.run(
   "Marília Mendonça, Péricles, César Menotti e Maraísa em especial de Natal",
   "Especial de natal com celebridades no MasterChef 2020",
   "https://pubimg.band.uol.com.br/files/eb9e64b485e94efc15aa.jpg",
