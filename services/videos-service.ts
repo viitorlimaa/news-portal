@@ -1,20 +1,32 @@
-import type { IVideoService } from "../contracts/ivideos-service.js";
+import type { IVideosService } from "../contracts/ivideos-service.js";
 import Result from "../infra/result.js";
-import type { Video } from "../models/video.js";
-import { videoRepository } from "../repository/videos-repository.js";
+import { videosRepository } from "../repository/videos-repository.js";
+import { HttpError } from "../shared/controller-error.js";
+import type { VideosInput } from "../validation/input-schemas.js";
+import type { Videos } from "../validation/videos-schema.js";
 
-export class VideoService implements IVideoService {
-  async get(_id: string): Promise<Video> {
-    let result = videoRepository.findById(_id);
+export class VideosService implements IVideosService {
+  async create(input: VideosInput): Promise<Videos> {
+    return videosRepository.create(input);
+  }
+
+  async delete(id: string): Promise<void> {
+    if (!videosRepository.delete(id)) {
+      throw new HttpError(404, `Vídeo ${id} não encontrado`);
+    }
+  }
+
+  async get(_id: string): Promise<Videos> {
+    let result = videosRepository.findById(_id);
     if (!result) throw new Error(`Video ${_id} não encontrado`);
     return result;
   }
-  async getAll(page: number, qtd: number): Promise<Result<Video>> {
-    const result = new Result<Video>();
+  async getAll(page: number, qtd: number): Promise<Result<Videos>> {
+    const result = new Result<Videos>();
     result.Page = page;
     result.Qtd = qtd;
-    result.Total = videoRepository.countAll();
-    result.Data = videoRepository.findAll(page, qtd);
+    result.Total = videosRepository.countAll();
+    result.Data = videosRepository.findAll(page, qtd);
     return result;
   }
 }

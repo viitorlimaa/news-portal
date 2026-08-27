@@ -1,53 +1,45 @@
 import Database, { type Database as DatabaseType } from "better-sqlite3";
+import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { Umzug } from "umzug";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const db: DatabaseType = new Database(path.join(__dirname, "../database.db"));
 const dbPath = path.join(__dirname, "../database.db");
 
-db.exec(`
-  CREATE TABLE IF NOT EXISTS news (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    titulo TEXT,
-    chapeu TEXT,
-    texto TEXT,
-    autor TEXT,
-    imagem TEXT,
-    dataPublicacao TEXT,
-    tags TEXT,
-    link TEXT,
-    ativo INTEGER DEFAULT 1
-  )
-`);
+const umzug = new Umzug({
+  migrations: {
+    glob: path.join(__dirname, "../migrations/*.sql"),
+    resolve: ({ name, path: migrationPath }) => ({
+      name,
+      up: async () => {
+        const sql = fs.readFileSync(migrationPath!, "utf-8");
+        db.exec(sql);
+      },
+      down: async () => {},
+    }),
+  },
+  storage: {
+    async executed() {
+      db.exec(`CREATE TABLE IF NOT EXISTS migrations (name TEXT PRIMARY KEY)`);
+      return db
+        .prepare("SELECT name FROM migrations")
+        .all()
+        .map((r: any) => r.name);
+    },
+    async logMigration({ name }) {
+      db.prepare("INSERT INTO migrations (name) VALUES (?)").run(name);
+    },
+    async unlogMigration({ name }) {
+      db.prepare("DELETE FROM migrations WHERE name = ?").run(name);
+    },
+  },
+  logger: console,
+});
 
-db.exec(`
-  CREATE TABLE IF NOT EXISTS videos (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    titulo TEXT,
-    texto TEXT,
-    imagem TEXT,
-    duracao TEXT,
-    url TEXT,
-    link TEXT,
-    dataPublicacao TEXT,
-    tags TEXT,
-    ativo INTEGER DEFAULT 1
-  )
-`);
+await umzug.up();
 
-db.exec(`
-  CREATE TABLE IF NOT EXISTS galerias (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    titulo TEXT,
-    texto TEXT,
-    imagem TEXT,
-    fotos TEXT,
-    link TEXT,
-    dataPublicacao TEXT,
-    tags TEXT,
-    ativo INTEGER DEFAULT 1
-  )
-`);
+console.log(`Migrações executadas!`);
 export default db;

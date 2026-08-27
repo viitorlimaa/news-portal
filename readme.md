@@ -2,7 +2,7 @@
 
 ## Descrição
 
-Aplicação backend em TypeScript com Express para busca e consulta de notícias, vídeos e galerias.
+Aplicação backend em TypeScript com Express para busca e consulta de notícias, podcasts, vídeos e galerias.
 
 ## Funcionalidades
 
@@ -10,9 +10,11 @@ Aplicação backend em TypeScript com Express para busca e consulta de notícias
 - Lista notícias paginadas
 - Retorna notícia por ID
 - Lista vídeos paginados
-- Retorna vídeo por ID
+- Retorna vídeos por ID
 - Lista galerias paginadas
-- Retorna galeria por ID
+- Retorna galerias por ID
+- Cria noticias, videos, podcasts e galerias
+- Remove noticias, videos, podcasts e galerias
 
 ## Tecnologias
 
@@ -33,7 +35,7 @@ Aplicação backend em TypeScript com Express para busca e consulta de notícias
 - `services/`: regras de negócio e orquestração de dados
 - `repository/`: acesso aos dados no banco SQLite
 - `shared/`: container de injeção de dependências
-- `models/`: classes e tipos do domínio
+- `validation/`: schemas Zod e tipos inferidos do domínio
 - `contracts/`: interfaces de serviços
 
 ## Instalação
@@ -105,6 +107,14 @@ Resposta:
 
 - `result`: objeto da notícia
 
+### POST /api/v1/news
+
+Cria uma notícia. O corpo é validado pelo schema Zod antes da persistência.
+
+### DELETE /api/v1/news/:id
+
+Remove uma notícia pelo ID.
+
 ### GET /api/v1/videos/:page/:qtd
 
 Retorna vídeos paginados.
@@ -130,7 +140,15 @@ Resposta:
 
 - `result`: objeto do vídeo
 
-### GET /api/v1/gallery/:page/:qtd
+### POST /api/v1/videos
+
+Cria um vídeo com corpo validado pelo schema Zod.
+
+### DELETE /api/v1/videos/:id
+
+Remove um vídeo pelo ID.
+
+### GET /api/v1/galleries/:page/:qtd
 
 Retorna galerias paginadas.
 
@@ -143,7 +161,7 @@ Resposta:
 
 - `result`: objeto com as propriedades `Page`, `Qtd`, `Total` e `Data`
 
-### GET /api/v1/gallery/:id
+### GET /api/v1/galleries/:id
 
 Retorna uma galeria por ID.
 
@@ -154,6 +172,22 @@ Parâmetros:
 Resposta:
 
 - `result`: objeto da galeria
+
+### POST /api/v1/galleries
+
+Cria uma galeria com corpo validado pelo schema Zod.
+
+### DELETE /api/v1/galleries/:id
+
+Remove uma galeria pelo ID.
+
+### POST /api/v1/podcasts
+
+Cria um podcast com corpo validado pelo schema Zod.
+
+### DELETE /api/v1/podcasts/:id
+
+Remove um podcast pelo ID.
 
 ## Banco de dados
 

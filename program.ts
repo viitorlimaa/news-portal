@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import "./shared/container.js";
 import startup from "./startup.js";
 
 const port = "5000";
