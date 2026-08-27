@@ -1,20 +1,30 @@
-import "reflect-metadata";
-import express from "express";
 import type { Request, Response } from "express";
-import NewsController from "../controllers/news-controller.js";
+import express from "express";
 import { container } from "tsyringe";
+import NewsController from "../controllers/news-controller.js";
 
-const newsRouter = express();
-
-const news = container.resolve(NewsController);
+const newsRouter = express.Router();
 
 newsRouter
-  .route("api/v1/news/:page/:qtd")
+  .route("/api/v1/news/:page/:qtd")
   .get((req: Request, res: Response) => {
+    const news = container.resolve(NewsController);
     return news.get(req, res);
   });
-newsRouter.route("api/v1/news/:id").get((req: Request, res: Response) => {
+
+newsRouter.post("/api/v1/news", (req: Request, res: Response) => {
+  const news = container.resolve(NewsController);
+  return news.create(req, res);
+});
+
+newsRouter.route("/api/v1/news/:id").get((req: Request, res: Response) => {
+  const news = container.resolve(NewsController);
   return news.getById(req, res);
+});
+
+newsRouter.delete("/api/v1/news/:id", (req: Request, res: Response) => {
+  const news = container.resolve(NewsController);
+  return news.delete(req, res);
 });
 
 export default newsRouter;
