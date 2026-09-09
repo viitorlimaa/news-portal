@@ -1,42 +1,48 @@
-# News-portal
+# News Portal
+
+Backend em TypeScript para consulta e gestão de notícias, vídeos, podcasts e galerias.
 
 ## Descrição
 
-Aplicação backend em TypeScript com Express para busca e consulta de notícias, podcasts, vídeos e galerias.
+Este projeto expõe uma API REST para consultar e gerenciar conteúdos de um portal de notícias. Ele foi desenvolvido com Node.js, Express e SQLite, com validação de entradas utilizando Zod.
 
 ## Funcionalidades
 
 - Retorna a versão da API no endpoint raiz
 - Lista notícias paginadas
 - Retorna notícia por ID
+- Cria notícias
+- Remove notícias
 - Lista vídeos paginados
-- Retorna vídeos por ID
+- Retorna vídeo por ID
+- Cria vídeos
+- Remove vídeos
+- Lista podcasts paginados
+- Retorna podcast por ID
+- Cria podcasts
+- Remove podcasts
 - Lista galerias paginadas
-- Retorna galerias por ID
-- Cria noticias, videos, podcasts e galerias
-- Remove noticias, videos, podcasts e galerias
+- Retorna galeria por ID
+- Cria galerias
+- Remove galerias
 
-## Tecnologias
+## Stack
 
 - TypeScript
 - Node.js
 - Express
+- SQLite
 - better-sqlite3
+- Zod
 - tsyringe
 - reflect-metadata
 - tsx
+- Jest
 
-## Estrutura do projeto
+## Requisitos
 
-- `program.ts`: ponto de entrada e inicialização do servidor
-- `startup.ts`: configuração do Express e registro de rotas
-- `infra/`: conexão SQLite, criação de tabelas e seed de dados
-- `controllers/`: controladores responsáveis pelas rotas
-- `services/`: regras de negócio e orquestração de dados
-- `repository/`: acesso aos dados no banco SQLite
-- `shared/`: container de injeção de dependências
-- `validation/`: schemas Zod e tipos inferidos do domínio
-- `contracts/`: interfaces de serviços
+- Node.js 20+
+- npm
 
 ## Instalação
 
@@ -44,17 +50,32 @@ Aplicação backend em TypeScript com Express para busca e consulta de notícias
 npm install
 ```
 
-## Configuração
+## Configuração de ambiente
 
-Não há variáveis de ambiente utilizadas no código analisado.
+Crie um arquivo `.env` com base no exemplo:
 
-## Execução
+```bash
+copy .env.example .env
+```
+
+## Variáveis de ambiente
+
+```env
+PORT=5000
+DB_PATH=./database.db
+```
+
+## Execução em desenvolvimento
 
 ```bash
 npm run dev
 ```
 
-O servidor é executado na porta `5000`.
+O servidor será iniciado em:
+
+```text
+http://localhost:5000
+```
 
 ## Build
 
@@ -62,18 +83,28 @@ O servidor é executado na porta `5000`.
 npm run build
 ```
 
+## Execução em produção
+
 ```bash
 npm start
 ```
 
-## Verificação de tipo
+## Verificação de tipos
 
 ```bash
 npm run check
 ```
 
+## Lint
+
 ```bash
-npm run check:diag
+npm run lint
+```
+
+## Testes
+
+```bash
+npm test
 ```
 
 ## API
@@ -86,115 +117,70 @@ Retorna a versão da API.
 
 Retorna notícias paginadas.
 
-Parâmetros:
-
-- `page` — número da página
-- `qtd` — quantidade de itens por página
-
-Resposta:
-
-- `result`: objeto com as propriedades `Page`, `Qtd`, `Total` e `Data`
-
 ### GET /api/v1/news/:id
 
 Retorna uma notícia por ID.
 
-Parâmetros:
-
-- `id` — identificador da notícia
-
-Resposta:
-
-- `result`: objeto da notícia
-
 ### POST /api/v1/news
 
-Cria uma notícia. O corpo é validado pelo schema Zod antes da persistência.
+Cria uma notícia.
 
 ### DELETE /api/v1/news/:id
 
-Remove uma notícia pelo ID.
+Remove uma notícia.
 
 ### GET /api/v1/videos/:page/:qtd
 
 Retorna vídeos paginados.
 
-Parâmetros:
-
-- `page` — número da página
-- `qtd` — quantidade de itens por página
-
-Resposta:
-
-- `result`: objeto com as propriedades `Page`, `Qtd`, `Total` e `Data`
-
 ### GET /api/v1/videos/:id
 
 Retorna um vídeo por ID.
 
-Parâmetros:
-
-- `id` — identificador do vídeo
-
-Resposta:
-
-- `result`: objeto do vídeo
-
 ### POST /api/v1/videos
 
-Cria um vídeo com corpo validado pelo schema Zod.
+Cria um vídeo.
 
 ### DELETE /api/v1/videos/:id
 
-Remove um vídeo pelo ID.
+Remove um vídeo.
+
+### GET /api/v1/podcasts/:page/:qtd
+
+Retorna podcasts paginados.
+
+### GET /api/v1/podcasts/:id
+
+Retorna um podcast por ID.
+
+### POST /api/v1/podcasts
+
+Cria um podcast.
+
+### DELETE /api/v1/podcasts/:id
+
+Remove um podcast.
 
 ### GET /api/v1/galleries/:page/:qtd
 
 Retorna galerias paginadas.
 
-Parâmetros:
-
-- `page` — número da página
-- `qtd` — quantidade de itens por página
-
-Resposta:
-
-- `result`: objeto com as propriedades `Page`, `Qtd`, `Total` e `Data`
-
 ### GET /api/v1/galleries/:id
 
 Retorna uma galeria por ID.
 
-Parâmetros:
-
-- `id` — identificador da galeria
-
-Resposta:
-
-- `result`: objeto da galeria
-
 ### POST /api/v1/galleries
 
-Cria uma galeria com corpo validado pelo schema Zod.
+Cria uma galeria.
 
 ### DELETE /api/v1/galleries/:id
 
-Remove uma galeria pelo ID.
-
-### POST /api/v1/podcasts
-
-Cria um podcast com corpo validado pelo schema Zod.
-
-### DELETE /api/v1/podcasts/:id
-
-Remove um podcast pelo ID.
+Remove uma galeria.
 
 ## Banco de dados
 
-A aplicação utiliza SQLite por meio da dependência `better-sqlite3`.
-
-A conexão é criada em `infra/db.ts` e o arquivo de banco de dados local é `database.db`.
+O projeto utiliza SQLite. O banco fica em `database.db` e o sistema deve criar as tabelas necessárias ao iniciar, se ainda não existirem.
 
 ## Licença
 
-ISC
+Este projeto está licenciado sob a licença MIT.

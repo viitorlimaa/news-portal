@@ -22,7 +22,7 @@ export default class GalleriesController {
   async getById(request: Request, response: Response) {
     try {
       const { id } = idParamsSchema.parse(request.params);
-      let result = await this._service.get(id);
+      const result = await this._service.get(id);
       response.status(200).json({ result });
     } catch (error) {
       sendControllerError(response, error);
