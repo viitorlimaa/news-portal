@@ -2,7 +2,7 @@
   "compilerOptions": {
     // Ambiente
     "module": "nodenext",
-    "target": "esnext",
+    "target": "esnext", //Versão do javascript usada como alvo
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
@@ -15,18 +15,20 @@
 
     // Tipos
     "typeRoots": ["./node_modules/@types"],
-    "types": ["node"],
+    "types": ["node", "jest"],
 
     // Rigor
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
+    "strict": true, //Faz com que todas as opções de veruficação de tipos sejam rigorosas
+    "noUncheckedIndexedAccess": true, //Impede o acesso a um array ou objeto que não está definido
     "exactOptionalPropertyTypes": true,
-    "verbatimModuleSyntax": true,
-    "isolatedModules": true,
+    "verbatimModuleSyntax": true, //Garante a sintaxe correta em importações, tanto para commonJS quanto moduleES, "module": "nodenext" também garante o uso da sintaxe correta para mjs ou cjs
+    "isolatedModules": true, //Esta opção impede o ts de usar alguns recursos inseguros, tratando os módulos como isolados
     "noUncheckedSideEffectImports": true,
-    "moduleDetection": "force",
-    "skipLibCheck": true,
-    "incremental": true
+    "moduleDetection": "force", //Força o ts a considerar todos os arquivos como módulo
+    "skipLibCheck": true, //Ignora a verificação de tipos no arquivo .d.ts, para evitar que os arquivos em node_modules sejam verificados (importante para o desempenho)
+    "incremental": true,
+    "allowJs": true, //Permite importar arquivos js
+    "resolveJsonModule": true //Permite importar arquivos json
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules", "dist"]

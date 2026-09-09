@@ -1,21 +1,21 @@
-name: PR Check # nome do workflow
+name: PR Check
 
-on: # quando vai executar
+on:
   pull_request:
-    branches: [develop, main] # em PRs para essas branches
+    branches: [develop, main]
 
-jobs: # o que vai fazer
-  check-database: # nome do job
-    runs-on: ubuntu-latest # ambiente onde vai rodar
+jobs:
+  check-database:
+    runs-on: ubuntu-latest
 
-    steps: # passos do job
+    steps:
       - name: Checkout do código
-        uses: actions/checkout@v3 # baixa o código do PR
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "24"
+          node-version: "20"
           cache: "npm"
 
       - name: Verifica arquivos de banco
@@ -32,3 +32,9 @@ jobs: # o que vai fazer
 
       - name: Verifica erros de TypeScript
         run: npm run check
+
+      - name: Executa linter
+        run: npm run lint
+
+      - name: Executa testes
+        run: npm test -- --runInBand

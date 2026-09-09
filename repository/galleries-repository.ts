@@ -6,25 +6,23 @@ import { picturesSchema, type Pictures } from "../validation/pictures-schema.js"
 function mapGalleriesPictures(rawValue: unknown): Pictures[] {
   if (typeof rawValue !== "string") return [];
 
-  try {
-    const parsed = JSON.parse(rawValue) as unknown;
-    if (!Array.isArray(parsed)) return [];
-
-    return parsed.map((item) => {
-      if (typeof item === "string") {
-        return picturesSchema.parse({
-          thumb: item,
-          thumbNail: item,
-          credito: "",
-          legenda: "",
-        });
-      }
-
-      return picturesSchema.parse(item);
-    });
-  } catch {
-    return [];
+  const parsed = JSON.parse(rawValue) as unknown;
+  if (!Array.isArray(parsed)) {
+    throw new Error("O campo fotos da galeria deve ser um array JSON");
   }
+
+  return parsed.map((item) => {
+    if (typeof item === "string") {
+      return picturesSchema.parse({
+        thumb: item,
+        thumbNail: item,
+        credito: "",
+        legenda: "",
+      });
+    }
+
+    return picturesSchema.parse(item);
+  });
 }
 
 function mapGalleries(gallery: Galleries & { fotos?: unknown }): Galleries {
