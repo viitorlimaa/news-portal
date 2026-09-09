@@ -4,8 +4,8 @@ import type { INewsService } from "../contracts/inews-service.js";
 import { sendControllerError } from "../shared/controller-error.js";
 import { newsInputSchema } from "../validation/input-schemas.js";
 import {
-    idParamsSchema,
-    paginationParamsSchema,
+  idParamsSchema,
+  paginationParamsSchema,
 } from "../validation/route-schema.js";
 
 @injectable()
@@ -52,4 +52,3 @@ export default class NewsController {
     }
   }
 }
-

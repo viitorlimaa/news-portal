@@ -1,9 +1,10 @@
 import type { IPodcastsService } from "../contracts/ipodcasts-service.js";
+import { resultSchema } from "../infra/result-schema.js";
 import Result from "../infra/result.js";
 import { PodcastsRepository } from "../repository/podcasts-repository.js";
 import { HttpError } from "../shared/controller-error.js";
 import type { PodcastsInput } from "../validation/input-schemas.js";
-import type { Podcasts } from "../validation/podcasts-schema.js";
+import { podcastsSchema, type Podcasts } from "../validation/podcasts-schema.js";
 
 export class PodcastsService implements IPodcastsService {
   async create(input: PodcastsInput): Promise<Podcasts> {
@@ -18,7 +19,7 @@ export class PodcastsService implements IPodcastsService {
 
   async get(_id: string): Promise<Podcasts> {
     const result = PodcastsRepository.findById(_id);
-    if (!result) throw new Error(`Podcast ${_id} não encontrado`);
+    if (!result) throw new HttpError(404, `Podcast ${_id} não encontrado`);
     return result;
   }
 
@@ -28,6 +29,6 @@ export class PodcastsService implements IPodcastsService {
     result.Qtd = qtd;
     result.Total = PodcastsRepository.countAll();
     result.Data = PodcastsRepository.findAll(page, qtd);
-    return result;
+    return resultSchema(podcastsSchema).parse(result);
   }
 }

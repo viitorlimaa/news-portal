@@ -7,7 +7,6 @@ import { Umzug } from "umzug";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const db: DatabaseType = new Database(path.join(__dirname, "../database.db"));
-const dbPath = path.join(__dirname, "../database.db");
 
 const umzug = new Umzug({
   migrations: {
@@ -27,7 +26,7 @@ const umzug = new Umzug({
       return db
         .prepare("SELECT name FROM migrations")
         .all()
-        .map((r: any) => r.name);
+        .map((row) => (row as { name: string }).name);
     },
     async logMigration({ name }) {
       db.prepare("INSERT INTO migrations (name) VALUES (?)").run(name);
