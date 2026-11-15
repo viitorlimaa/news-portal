@@ -1,6 +1,6 @@
 import request from "supertest";
 import "../../shared/container.js";
-import startup from "../../startup.js";
+import startup from "../../src/startup.js";
 
 describe("rotas HTTP", () => {
   it("lista noticias com paginacao valida", async () => {
